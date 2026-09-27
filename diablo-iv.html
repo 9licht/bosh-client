@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Diablo IV — BOSH CLIENT</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="client-body">
+  <a class="skip-link" href="#game-detail">Skip to game details</a>
+
+  <header class="client-titlebar">
+    <a href="index.html" class="client-brand" aria-label="BOSH CLIENT Home">
+      <span class="client-logo" aria-hidden="true">&#9670;</span>
+      <span class="site-title">BOSH CLIENT</span>
+    </a>
+    <nav class="client-nav" aria-label="Primary">
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="library.html">Library</a></li>
+        <li><a href="about.html">About</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="game-detail">
+    <p class="breadcrumb"><a href="library.html">&larr; Back to library</a></p>
+
+    <article>
+      <header class="game-header">
+        <div class="thumb thumb-large thumb-diablo" aria-hidden="true">D4</div>
+        <div>
+          <h1>Diablo IV</h1>
+          <p class="game-meta">Action RPG &middot; Blizzard Entertainment &middot; Released 2023</p>
+        </div>
+      </header>
+
+      <p>A dark fantasy action RPG where players build a character from one of
+      several classes and fight through corrupted regions in pursuit of an
+      ancient evil, with content that continues to expand each season.</p>
+
+      <section aria-labelledby="requirements-heading">
+        <h2 id="requirements-heading">System requirements</h2>
+        <ul>
+          <li>OS: Windows 10 or later</li>
+          <li>Memory: 8 GB RAM</li>
+          <li>Storage: 90 GB available space</li>
+        </ul>
+      </section>
+
+      <section aria-labelledby="launch-heading" class="launch-section">
+        <h2 id="launch-heading" class="visually-hidden">Launch this game</h2>
+        <button type="button" id="launch-btn" class="btn-primary">
+          <span class="btn-icon" id="launch-icon" aria-hidden="true">&#9654;</span>
+          <span id="launch-label">Launch Diablo IV</span>
+        </button>
+        <p id="launch-status" role="status" aria-live="polite"></p>
+      </section>
+    </article>
+  </main>
+
+  <script>
+    const btn = document.getElementById('launch-btn');
+    const icon = document.getElementById('launch-icon');
+    const label = document.getElementById('launch-label');
+    const status = document.getElementById('launch-status');
+    btn.addEventListener('click', () => {
+      btn.disabled = true;
+      icon.className = 'spinner';
+      icon.textContent = '';
+      label.textContent = 'Launching…';
+      status.textContent = 'Starting Diablo IV.';
+      setTimeout(() => {
+        icon.className = 'btn-icon';
+        icon.textContent = '\u2713';
+        label.textContent = 'Running';
+        status.textContent = 'Diablo IV is running.';
+      }, 1200);
+    });
+  </script>
+</body>
+</html>

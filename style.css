@@ -1,0 +1,468 @@
+:root {
+  --bg: #14171c;
+  --surface: #1d222a;
+  --text: #eef1f5;
+  --muted: #97a1ad;
+  --border: rgba(255, 255, 255, 0.08);
+  --accent: #ff6b3d;
+  --accent-hover: #e2542a;
+  --ok: #3ddc97;
+  --focus: #ffd166;
+  --pending: #ffd166; /* same hue as focus: in-progress states share one colour language */
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, "Segoe UI", sans-serif;
+  color: var(--text);
+  background: var(--bg);
+  line-height: 1.55;
+}
+
+/* Utility */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.skip-link {
+  position: absolute;
+  left: -999px;
+  top: 0;
+  background: var(--accent);
+  color: #14171c;
+  font-weight: 700;
+  padding: 0.6rem 1rem;
+  z-index: 10;
+}
+.skip-link:focus {
+  left: 0;
+}
+
+a:focus-visible,
+button:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+}
+
+/* Header / nav */
+.client-titlebar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.1rem 2rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.client-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--text);
+  text-decoration: none;
+}
+
+.client-logo {
+  color: var(--accent);
+  font-size: 1.1rem;
+}
+
+.site-title {
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+@keyframes brand-float {
+  0%, 100% { transform: translateY(0) rotateX(0deg) rotateY(0deg); }
+  25%      { transform: translateY(-2px) rotateX(4deg) rotateY(-4deg); }
+  50%      { transform: translateY(-4px) rotateX(-3deg) rotateY(4deg); }
+  75%      { transform: translateY(-2px) rotateX(3deg) rotateY(-2deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-title {
+    animation: none;
+  }
+}
+
+.client-nav ul {
+  list-style: none;
+  display: flex;
+  gap: 1.5rem;
+  margin: 0;
+  padding: 0;
+}
+
+.client-nav a {
+  color: var(--muted);
+  text-decoration: none;
+  padding-bottom: 0.3rem;
+  border-bottom: 2px solid transparent;
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+
+.client-nav a:hover,
+.client-nav a:focus-visible {
+  color: var(--text);
+  border-bottom-color: var(--border);
+}
+
+.client-nav a[aria-current="page"] {
+  color: var(--text);
+  border-bottom-color: var(--accent);
+}
+
+/* Main content */
+main {
+  max-width: 64rem;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+main h1 {
+  margin-bottom: 0.25rem;
+}
+
+.page-intro {
+  color: var(--muted);
+  margin-top: 0;
+}
+
+.breadcrumb a {
+  color: var(--muted);
+  text-decoration: none;
+}
+.breadcrumb a:hover,
+.breadcrumb a:focus-visible {
+  color: var(--text);
+}
+
+/* Hero (home page) */
+.client-hero {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100vh - 4.6rem); /* full height below the fixed titlebar, no footer to offset for */
+  text-align: center;
+}
+
+.hero-container {
+  max-width: 50rem;
+  perspective: 600px;
+}
+
+.hero-tag {
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.hero-title {
+  display: inline-block;
+  font-size: 6rem;
+  margin: 0.25rem 0 0.75rem;
+  white-space: nowrap;
+  transform-style: preserve-3d;
+  animation: brand-float 5s ease-in-out infinite;
+  will-change: transform;
+}
+
+.hero-description {
+  color: var(--muted);
+  margin-bottom: 2rem;
+}
+
+.btn-hero-launch {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.9rem;
+  background: var(--accent);
+  color: #1a1005;
+  text-decoration: none;
+  padding: 0.9rem 1.6rem;
+  border-radius: 6px;
+  font-weight: 700;
+}
+
+.btn-hero-launch:hover {
+  background: var(--accent-hover);
+}
+
+.btn-icon {
+  font-size: 1.1rem;
+}
+
+.btn-text {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  line-height: 1.25;
+}
+
+.btn-text small {
+  font-weight: 400;
+  opacity: 0.8;
+}
+
+/* Library grid — box-art style tiles */
+.game-grid {
+  list-style: none;
+  margin: 1.5rem 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(13rem, 1fr));
+  gap: 1.5rem;
+}
+
+.game-card article {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 0.9rem;
+  height: 100%;
+  transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+/* Signifier: a card that can be opened lifts and gains a play icon on
+   hover/focus, rather than relying on the underline alone to say "clickable" */
+.game-card:hover article,
+.game-card:focus-within article {
+  transform: translateY(-3px);
+  border-color: var(--accent);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
+}
+
+.thumb {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 3 / 4;
+  width: 100%;
+  border-radius: 4px;
+  color: #fff;
+  font-weight: 700;
+  font-size: 1.6rem;
+  letter-spacing: 0.05em;
+  text-decoration: none;
+}
+
+.game-card:hover .thumb::after,
+.game-card:focus-within .thumb::after {
+  content: "\25B6";
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 4px;
+}
+
+.thumb-elden   { background: linear-gradient(160deg, #b58a35, #6f5117); }
+.thumb-diablo  { background: linear-gradient(160deg, #9c2b3a, #5c141d); }
+.thumb-destiny { background: linear-gradient(160deg, #3a5f9c, #1e335c); }
+
+.game-card h3 {
+  margin: 0.85rem 0 0.2rem;
+  font-size: 1.05rem;
+}
+
+.game-card h3 a {
+  color: var(--text);
+  text-decoration: none;
+}
+.game-card h3 a:hover,
+.game-card h3 a:focus-visible {
+  text-decoration: underline;
+}
+
+.game-meta {
+  color: var(--muted);
+  font-size: 0.85rem;
+  margin: 0.2rem 0;
+}
+
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  margin: 0.5rem 0 0;
+}
+
+.status-installed { color: var(--ok); }
+.status-installed::before { content: "\2713"; }
+
+.status-not-installed { color: var(--muted); }
+.status-not-installed::before { content: "\2013"; }
+
+/* Game detail header */
+.game-header {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  margin-bottom: 1.25rem;
+}
+
+.thumb-large {
+  width: 5.5rem;
+  height: auto;
+  aspect-ratio: 3 / 4;
+  flex-shrink: 0;
+  font-size: 1.3rem;
+}
+
+.game-header h1 {
+  margin: 0;
+}
+
+article > p {
+  max-width: 40rem;
+}
+
+/* Launch / install controls */
+.launch-section {
+  margin-top: 1.75rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--border);
+}
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font: inherit;
+  font-weight: 700;
+  padding: 0.7rem 1.4rem;
+  background: var(--accent);
+  color: #1a1005;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: var(--accent-hover);
+}
+
+.btn-primary:disabled {
+  background: #454b54;
+  color: var(--muted);
+  cursor: not-allowed;
+}
+
+/* Icon signifies the action a button will take (install vs. launch vs.
+   in-progress) instead of relying on label text alone */
+.btn-icon {
+  display: inline-flex;
+  font-size: 1rem;
+  line-height: 1;
+}
+
+.spinner {
+  display: inline-block;
+  width: 0.9em;
+  height: 0.9em;
+  border: 2px solid rgba(0, 0, 0, 0.25);
+  border-top-color: #1a1005;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .spinner { animation-duration: 1.4s; }
+}
+
+/* Doherty Threshold: an install takes longer than the ~400ms response
+   people expect, so a determinate bar keeps the wait communicative
+   instead of leaving the interface looking frozen */
+.progress-track {
+  display: none;
+  margin-top: 0.75rem;
+  height: 6px;
+  width: 100%;
+  max-width: 20rem;
+  background: var(--border);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.progress-track.is-active {
+  display: block;
+}
+
+.progress-fill {
+  height: 100%;
+  width: 0%;
+  background: var(--pending);
+  border-radius: 999px;
+}
+
+#launch-status,
+#action-status {
+  margin-top: 0.6rem;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+/* About page */
+.about-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+  gap: 1.25rem;
+  margin-top: 1.5rem;
+}
+
+.about-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1.25rem;
+}
+
+.about-card h3 {
+  margin-top: 0;
+}
+
+footer {
+  border-top: 1px solid var(--border);
+  padding: 1.25rem 2rem;
+  color: var(--muted);
+  font-size: 0.8rem;
+  text-align: center;
+}
+
+@media (max-width: 30rem) {
+  .client-titlebar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.6rem;
+  }
+  .game-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .hero-title {
+    font-size: 4.4rem;
+    white-space: normal;
+  }
+}

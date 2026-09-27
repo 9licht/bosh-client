@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Library — BOSH CLIENT</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="client-body">
+  <a class="skip-link" href="#library">Skip to library</a>
+
+  <header class="client-titlebar">
+    <a href="index.html" class="client-brand" aria-label="BOSH CLIENT Home">
+      <span class="client-logo" aria-hidden="true">&#9670;</span>
+      <span class="site-title">BOSH CLIENT</span>
+    </a>
+    <nav class="client-nav" aria-label="Primary">
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="library.html" aria-current="page">Library</a></li>
+        <li><a href="about.html">About</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="library">
+    <p class="breadcrumb"><a href="index.html">&larr; Back to home</a></p>
+
+    <h1>Your library</h1>
+    <p class="page-intro">Open a game below to see details and launch it.</p>
+
+    <section aria-labelledby="library-heading">
+      <h2 id="library-heading" class="visually-hidden">Games</h2>
+      <ul class="game-grid">
+
+        <li class="game-card">
+          <article>
+            <a class="thumb thumb-elden" href="elden-ring.html" aria-hidden="true" tabindex="-1">ER</a>
+            <h3><a href="elden-ring.html">Elden Ring</a></h3>
+            <p class="game-meta">Action RPG &middot; FromSoftware</p>
+            <p class="status status-installed">Installed</p>
+          </article>
+        </li>
+
+        <li class="game-card">
+          <article>
+            <a class="thumb thumb-diablo" href="diablo-iv.html" aria-hidden="true" tabindex="-1">D4</a>
+            <h3><a href="diablo-iv.html">Diablo IV</a></h3>
+            <p class="game-meta">Action RPG &middot; Blizzard Entertainment</p>
+            <p class="status status-installed">Installed</p>
+          </article>
+        </li>
+
+        <li class="game-card">
+          <article>
+            <a class="thumb thumb-destiny" href="destiny-2.html" aria-hidden="true" tabindex="-1">D2</a>
+            <h3><a href="destiny-2.html">Destiny 2</a></h3>
+            <p class="game-meta">Looter shooter &middot; Bungie</p>
+            <p class="status status-not-installed" id="status-destiny2" data-game="destiny2">Not installed</p>
+          </article>
+        </li>
+
+      </ul>
+    </section>
+  </main>
+
+  <script>
+    // Reflect real install state on return to the library, instead of
+    // a status that never changes once a game has been installed.
+    const statusEl = document.getElementById('status-destiny2');
+    if (statusEl && localStorage.getItem('bosh-installed-destiny2') === 'true') {
+      statusEl.textContent = 'Installed';
+      statusEl.classList.remove('status-not-installed');
+      statusEl.classList.add('status-installed');
+    }
+  </script>
+</body>
+</html>

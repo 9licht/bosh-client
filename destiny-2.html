@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Destiny 2 — BOSH CLIENT</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="client-body">
+  <a class="skip-link" href="#game-detail">Skip to game details</a>
+
+  <header class="client-titlebar">
+    <a href="index.html" class="client-brand" aria-label="BOSH CLIENT Home">
+      <span class="client-logo" aria-hidden="true">&#9670;</span>
+      <span class="site-title">BOSH CLIENT</span>
+    </a>
+    <nav class="client-nav" aria-label="Primary">
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="library.html">Library</a></li>
+        <li><a href="about.html">About</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="game-detail">
+    <p class="breadcrumb"><a href="library.html">&larr; Back to library</a></p>
+
+    <article>
+      <header class="game-header">
+        <div class="thumb thumb-large thumb-destiny" aria-hidden="true">D2</div>
+        <div>
+          <h1>Destiny 2</h1>
+          <p class="game-meta">Looter shooter &middot; Bungie &middot; Released 2017</p>
+        </div>
+      </header>
+
+      <p>An online shared-world shooter where players complete missions and
+      raids to earn increasingly powerful gear across an evolving, seasonal
+      universe.</p>
+
+      <section aria-labelledby="requirements-heading">
+        <h2 id="requirements-heading">System requirements</h2>
+        <ul>
+          <li>OS: Windows 10 or later</li>
+          <li>Memory: 8 GB RAM</li>
+          <li>Storage: 105 GB available space</li>
+        </ul>
+      </section>
+
+      <section aria-labelledby="launch-heading" class="launch-section">
+        <h2 id="launch-heading" class="visually-hidden">Install or launch this game</h2>
+        <button type="button" id="action-btn" class="btn-primary">
+          <span class="btn-icon" id="action-icon" aria-hidden="true">&#8681;</span>
+          <span id="action-label">Install Destiny 2</span>
+        </button>
+        <div class="progress-track" id="progress-track">
+          <div class="progress-fill" id="progress-fill"></div>
+        </div>
+        <p id="action-status" role="status" aria-live="polite"></p>
+      </section>
+    </article>
+  </main>
+
+  <script>
+    const STORAGE_KEY = 'bosh-installed-destiny2';
+    const btn = document.getElementById('action-btn');
+    const icon = document.getElementById('action-icon');
+    const label = document.getElementById('action-label');
+    const status = document.getElementById('action-status');
+    const track = document.getElementById('progress-track');
+    const fill = document.getElementById('progress-fill');
+    let installed = localStorage.getItem(STORAGE_KEY) === 'true';
+
+    if (installed) {
+      icon.textContent = '\u25B6';
+      label.textContent = 'Launch Destiny 2';
+    }
+
+    btn.addEventListener('click', () => {
+      if (!installed) {
+        // Install: a genuinely long, variable-length task. Doherty Threshold
+        // says a wait over ~400ms needs continuous feedback, not a frozen
+        // button, so this shows a determinate progress bar with a real
+        // percentage rather than just swapping text once at the end.
+        btn.disabled = true;
+        icon.className = 'spinner';
+        icon.textContent = '';
+        label.textContent = 'Installing…';
+        status.textContent = 'Installing Destiny 2. 0% complete.';
+        track.classList.add('is-active');
+        fill.style.transition = 'none';
+        fill.style.width = '0%';
+        requestAnimationFrame(() => {
+          fill.style.transition = 'width 1.5s linear';
+          fill.style.width = '100%';
+        });
+
+        setTimeout(() => {
+          status.textContent = 'Installing Destiny 2. 50% complete.';
+        }, 750);
+
+        setTimeout(() => {
+          installed = true;
+          localStorage.setItem(STORAGE_KEY, 'true');
+          btn.disabled = false;
+          icon.className = 'btn-icon';
+          icon.textContent = '\u25B6';
+          label.textContent = 'Launch Destiny 2';
+          status.textContent = 'Destiny 2 installed.';
+          track.classList.remove('is-active');
+        }, 1500);
+      } else {
+        // Launch: duration is indeterminate (we don't know how long the
+        // engine takes to boot), so a spinner is the correct signifier here,
+        // not a determinate progress bar.
+        btn.disabled = true;
+        icon.className = 'spinner';
+        icon.textContent = '';
+        label.textContent = 'Launching…';
+        status.textContent = 'Starting Destiny 2.';
+        setTimeout(() => {
+          icon.className = 'btn-icon';
+          icon.textContent = '\u2713';
+          label.textContent = 'Running';
+          status.textContent = 'Destiny 2 is running.';
+        }, 1200);
+      }
+    });
+  </script>
+</body>
+</html>
